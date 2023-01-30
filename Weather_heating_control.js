@@ -1,11 +1,11 @@
  let CONFIG = {
-  accuWeatherAPIKEY: "YOUR_ACCU_WEATHER_API_KEY",
+  accuWeatherAPIKEY: "YOUR ACCUWETAHER API KEY",
   weatherForecastEndpoint:
     "http://dataservice.accuweather.com/forecasts/v1/daily/1day/",
   weatherCurrentEndpoint:
     "http://dataservice.accuweather.com/currentconditions/v1/",
   locations: {
-  // Set location as name and code from ACCUWEATHER
+  // Set your location name and code
     Sofia: 51097,
    },
   //check every 60 seconds
@@ -14,8 +14,8 @@
   tempBelowTurnOn: 7,
   tempAboveTurnOff: 10,
   //Working interval
-  workTimeStart: 6, 
-  workTimeEnd: 23,
+  workTimeStart: 7, 
+  workTimeEnd: 22,
 };
 
 let workingH = true;
@@ -69,11 +69,11 @@ Shelly.call(
       let currentTime = JSON.parse(response.body).datetime;
       let currentHour = currentTime.slice(11,13);
       print("Current time in Sofia", currentHour);
-      if (JSON.parse(currentHour) > CONFIG.workTimeEnd && JSON.parse(currentHour) < CONFIG.workTimeStart) {
+      if (JSON.parse(currentHour) < CONFIG.workTimeEnd && JSON.parse(currentHour) > CONFIG.workTimeStart) {
+          workingH = true; 
+      } else {           
           workingH = false;
           activateSwitch(false);
-      } else { 
-          workingH = true; 
       }
       print(workingH);
       }
